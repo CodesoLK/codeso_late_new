@@ -63,7 +63,9 @@ class codesoHrLate(models.Model):
     
     @api.multi
     def action_leave_allocate(self):
-        self.write({'state': 'refuse'})
+        if self.state == 'refuse':
+            raise UserError('Already allocated a leave. Please Refresh')
+        
         emp_in = None
         emp_out = None
         if self.start_date:
