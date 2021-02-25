@@ -62,8 +62,25 @@ class codesoHrLate(models.Model):
         return self.write({'state':'validate'})
     
     @api.multi
-    def action_refuse(self):
-        return self.write({'state':'refuse'})
+    def action_leave_allocate(self):
+        self.write({'state': 'refuse'})
+        emp_in = None
+        emp_out = None
+        if self.start_date:
+            emp_in = self.start_date
+        if self.end_date:
+            emp_out = self.end_date
+        return {
+            'res_model': 'hr.holidays',
+            'type': 'ir.actions.act_window',
+            'context': {'default_date_from':self.start_date,
+                        'default_date_to': self.end_date,
+                        'default_employee_id': self.employee_id.id},
+            'view_mode': 'form',
+            'view_type': 'form',
+            'view_id': self.env.ref("hr_holidays.edit_holiday_new").id,
+            'target': 'new'
+        }
         
     @api.multi
     def action_view_attendance(self):

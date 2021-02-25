@@ -17,6 +17,7 @@
     'depends': ['hr_contract','hr_attendance','hr','hr_payroll'],
     'data': [
         'views/codeso_late.xml',
+        'data/late_schedule.xml',
     ],
 
     'installable': True,
