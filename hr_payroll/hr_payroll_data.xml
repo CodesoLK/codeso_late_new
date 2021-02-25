@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+	<data noupdate="0">
+
+		<record id="hr_rule_late" model="hr.salary.rule">
+			<field name="name">Late Add In Salary Payment</field>
+			<field name="sequence" eval="1" />
+			<field name="code">Late_NW</field>
+			<field name="category_id" ref="hr_payroll.BASIC" />
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field name="amount_python_compute">result = 0.0
+if payslip.total_ot_hours and employee.ot_rate_per_hour:
+        result = payslip.total_ot_hours * employee.ot_rate_per_hour
+elif payslip.total_ot_hours and employee.job_id.ot_rate_per_hour:
+        result = payslip.total_ot_hours * employee.job_id.ot_rate_per_hour
+else:
+    result = 0.0
+			</field>
+			<field name="register_id" ref="hr_payroll.contrib_register_employees" />
+		</record>
+
+
+	</data>
+</flectra>
